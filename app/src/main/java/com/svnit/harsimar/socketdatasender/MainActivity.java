@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         final ArrayAdapter adapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,items);
         listView.setAdapter(adapter);
-
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
