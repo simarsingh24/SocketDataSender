@@ -19,13 +19,33 @@
         app:layout_constraintTop_toTopOf="parent"
         android:padding="8dp"/>
     <ListView
-        android:layout_weight="8"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:id="@+id/list_view"
         android:padding="8dp">
     </ListView>
-    <LinearLayout
+    <LinearLayout android:id="@+id/footer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom">
+
+        <EditText android:inputType="textMultiLine|textNoSuggestions"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:id="@+id/edit_text"
+            android:layout_weight="1"/>
+
+        <!-- send button -->
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_btn"
+            android:layout_gravity="center_vertical"
+            android:text="Push" />
+
+    </LinearLayout>
+    <!--LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -42,6 +62,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="-->"
-        android:id="@+id/add_btn"/>
-    </LinearLayout>
+    android:id="@+id/add_btn"/>
+    <!--/LinearLayout-->
 </LinearLayout>
