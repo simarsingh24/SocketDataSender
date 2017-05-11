@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                 items.add(editText.getText().toString());
                 sendData(editText.getText().toString());
                 editText.setText("");
+                adapter.notifyDataSetChanged();
 
 
             }
