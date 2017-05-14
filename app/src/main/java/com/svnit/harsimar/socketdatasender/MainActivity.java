@@ -10,8 +10,10 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private Button addBtn;
     private EditText editText;
+    public static ArrayList<String> items=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +34,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialise();
 
-        final ArrayList<String> items=new ArrayList<String>();
-
         final ArrayAdapter adapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1,items);
         listView.setAdapter(adapter);
+
+        Thread thread =new Thread(new Runnable() {
+            @Override
+            public void run() {
+                checkForTrigger();
+            }
+        });
+        thread.start();
+
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 items.add(editText.getText().toString());
-                sendData(editText.getText().toString());
+                //sendData(editText.getText().toString());
                 editText.setText("");
                 adapter.notifyDataSetChanged();
-
-
             }
         });
+
+
+    }
+
+    private void checkForTrigger() {
+        String msg_received;
+        try{
+            ServerSocket socket=new ServerSocket(8080);
+            Socket clientSocket=socket.accept();
+            DataInputStream DIS = new DataInputStream(clientSocket.getInputStream());
+            msg_received = DIS.readUTF();
+            clientSocket.close();
+            socket.close();
+        }
+        catch(IOException e){
+            msg_received=e.toString();
+        }
+        if(msg_received.equals("transmit_data")){
+            for (int i=0;i<items.size();i++){
+                sendData(items.get(i).toString());
+            }
+        }
     }
 
     public void initialise(){
