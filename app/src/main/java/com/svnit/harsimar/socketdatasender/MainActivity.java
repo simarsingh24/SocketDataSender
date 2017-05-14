@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String serverIP="192.168.43.15";
+    public static final String serverIP="192.168.1.51";
     public static final int serverPort=8080;
 
     private ListView listView;
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkForTrigger() {
         String msg_received;
+        while(true){
         try{
             ServerSocket socket=new ServerSocket(8080);
             Socket clientSocket=socket.accept();
@@ -72,10 +74,23 @@ public class MainActivity extends AppCompatActivity {
             msg_received=e.toString();
         }
         if(msg_received.equals("transmit_data")){
-            for (int i=0;i<items.size();i++){
+
+            Log.d("harsimarSingh","trigger");
+/*
+            try{
+                Socket socket = new Socket("192.168.1.51",8080);
+                DataOutputStream DOS = new DataOutputStream(socket.getOutputStream());
+                DOS.writeUTF(items.get(0).toString());
+                socket.close();
+
+            }catch(IOException e){}
+*/
+sendData("harsimar");
+           /* for (int i=0;i<items.size();i++){
                 sendData(items.get(i).toString());
-            }
-        }
+                Log.d("harsimarSingh",items.get(i).toString());
+            }*/
+        }}
     }
 
     public void initialise(){
