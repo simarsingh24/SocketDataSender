@@ -85,11 +85,12 @@ public class MainActivity extends AppCompatActivity {
 
             }catch(IOException e){}
 */
-sendData("harsimar");
-           /* for (int i=0;i<items.size();i++){
-                sendData(items.get(i).toString());
+          String s="";
+            for (int i=0;i<items.size();i++){
+                s+=items.get(i).toString()+"*";
                 Log.d("harsimarSingh",items.get(i).toString());
-            }*/
+            }
+            sendData(s);
         }}
     }
 
