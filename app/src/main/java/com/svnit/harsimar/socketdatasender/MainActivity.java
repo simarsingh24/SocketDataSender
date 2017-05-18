@@ -1,8 +1,11 @@
 package com.svnit.harsimar.socketdatasender;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,8 +27,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String serverIP="192.168.1.39";
-    public static final int serverPort=8080;
+    public static  String serverIP="192.168.1.39";
+    public static  int serverPort=8080;
 
     private ListView listView;
     private Button addBtn;
@@ -67,7 +70,29 @@ public class MainActivity extends AppCompatActivity {
 
         if(item.getItemId()==R.id.connect){
 
-            
+            View view= LayoutInflater.from(MainActivity.this).inflate(R.layout.alert_connection,null);
+            final EditText ipEditText=(EditText)view.findViewById(R.id.connection_ip_editText);
+            final EditText portEditText=(EditText)view.findViewById(R.id.connection_port_editText);
+
+            AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this)
+                    .setMessage("Enter connection details: ")
+                    .setView(view)
+                    .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Toast.makeText(MainActivity.this,"Connected"
+                            ,Toast.LENGTH_SHORT).show();
+
+                            serverIP=ipEditText.getText().toString();
+                            serverPort=Integer.parseInt(portEditText.getText().toString());
+
+                        }
+                    }).setNegativeButton("Cancel",null)
+                    .setCancelable(false);
+            AlertDialog alert=builder.create();
+            alert.show();
+
         }
 
         return true;
